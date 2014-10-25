@@ -1,18 +1,17 @@
 {
   "name": "MyTreeherder",
   "description": "A shrinked, mobile-first version of Treeherder",
-  "launch_path": "/mytreeherder/",
+  "launch_path": "/index.html",
   "icons": {
-    "16": "/mytreeherder/icons/icon16x16.png",
-    "48": "/mytreeherder/icons/icon48x48.png",
-    "60": "/mytreeherder/icons/icon60x60.png",
-    "128": "/mytreeherder/icons/icon128x128.png"
+    "16": "icons/icon16x16.png",
+    "48": "icons/icon48x48.png",
+    "60": "icons/icon60x60.png",
+    "128": "icons/icon128x128.png"
   },
   "type": "web",
   "developer": {
     "name": "Mauro Doglio",
     "url": "http://www.maurodoglio.com"
-},
+  },
   "permissions": {}
 }
-
