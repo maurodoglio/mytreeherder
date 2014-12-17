@@ -14,6 +14,7 @@ deploy:
     secure: UgjQ4bfuzs54CUC9GsWm+NNsNA3UmxT2wEcHrRk31mD/ivC06OlDQUfh7fxnCTSYyKTOnk8+iAz9WNDyGw/5wbFUCjMV9pVR9KGXCEmTK49RRi4nl5jwcT5hahuqjsS0ZEwEFK1nx9wvEz7MrvUR7OCLdXBjrw0xoBiIumIWydg=
   bucket: mytreeherder
   local-dir: dist
+  upload-dir: dist
   on:
     branch: master
     repo: maurodoglio/mytreeherder
