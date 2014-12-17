@@ -163,6 +163,8 @@ module.exports = function (grunt) {
     // Automatically inject Bower components into the app
     wiredep: {
       options: {
+      	bowerJson: require('./bower.json'),
+      	directory: './bower_components',
         cwd: '<%= yeoman.app %>'
       },
       app: {
@@ -312,7 +314,9 @@ module.exports = function (grunt) {
             '*.html',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
-            'fonts/*'
+            'fonts/*',
+            'icons/*',
+            'manifest.webapp'
           ]
         }, {
           expand: true,
