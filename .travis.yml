@@ -4,3 +4,16 @@ node_js:
 before_script:
   - 'npm install -g bower grunt-cli'
   - 'bower install'
+before_deploy:
+  - grunt build
+deploy:
+  skip_cleanup: true
+  provider: s3
+  access_key_id: AKIAIDJP3HYDX5QBTNUQ
+  secret_access_key:
+    secure: UgjQ4bfuzs54CUC9GsWm+NNsNA3UmxT2wEcHrRk31mD/ivC06OlDQUfh7fxnCTSYyKTOnk8+iAz9WNDyGw/5wbFUCjMV9pVR9KGXCEmTK49RRi4nl5jwcT5hahuqjsS0ZEwEFK1nx9wvEz7MrvUR7OCLdXBjrw0xoBiIumIWydg=
+  bucket: mytreeherder
+  local-dir: dist
+  on:
+    branch: master
+    repo: maurodoglio/mytreeherder
