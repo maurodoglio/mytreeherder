@@ -24,8 +24,11 @@ angular.module('mytreeherderApp')
         var resultset_url_template = $interpolate(
                 appSettings.serviceUrl+"/api/project/{{repository}}/resultset/?author={{author}}"
         );
+        var resultset_status_url_template = $interpolate(
+                appSettings.serviceUrl+"/api/project/{{repository}}/resultset/{{id}}/status/"
+        );
         $scope.find_pushes = function(){
-            $scope.resultset_list = [];
+            $scope.resultset_map = {};
             var resultset_endpoint = resultset_url_template({
                 repository: $scope.repository.name,
                 author: $scope.email
@@ -39,25 +42,34 @@ angular.module('mytreeherderApp')
                     $scope.message = "No result sets found :(";
                 }else{
                     angular.forEach(response.data.results, function(elem){
-                        var total_count = 0;
-                        angular.forEach(elem.job_counts, function(qty){
-                            total_count += qty;
-                        })
-                        var pending_running = elem.job_counts.pending + elem.job_counts.running;
-
-                        temp_list.push({
+                        var resultset_status_url = resultset_status_url_template({
+                            repository: $scope.repository.name,
+                            id: elem.id
+                        });
+                        $scope.resultset_map[elem.id] = {
                             revision: elem.revisions[0].revision,
-                            push_timestamp: new Date(elem.push_timestamp*1000),
-                            status: Math.round((total_count-pending_running)*100.0/total_count)
+                            push_timestamp: new Date(elem.push_timestamp*1000)                            
+                        }
+                        $http.get(resultset_status_url).then(function(status_response){
+                            var status = status_response.data;
+                            var total_count = 0;
+                            angular.forEach(status, function(qty){
+                                total_count += parseInt(qty);
+                            })
+                            var pending = parseInt(status.pending) || 0;
+                            var running = parseInt(status.running) || 0;
+                            var pending_running = pending + running;
+                            console.log(total_count);
+                            console.log(pending_running);
+                            $scope.resultset_map[elem.id].status = Math.round(
+                                (total_count-pending_running)*100.0/total_count);
                         });
                     });
                 }
-                $scope.resultset_list = temp_list;
                 },
                 function(error){
                     $scope.message = "Error retrieving data from the server:"+JSON.stringify(error);
-                }
-            )
+                })
             .finally(function(){
                 usSpinnerService.stop("main_spinner");
             })

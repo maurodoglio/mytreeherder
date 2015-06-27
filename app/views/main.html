@@ -38,7 +38,7 @@
 <span us-spinner spinner-key="main_spinner"></span>
 <div>
     <ul class="list-group">
-        <li ng-repeat="resultset in resultset_list" class="list-group-item">
+        <li ng-repeat="(index, resultset) in resultset_map | orderBy: '-push_timestamp'" class="list-group-item">
             {{resultset.revision}} - {{resultset.push_timestamp|date:'short'}}
             <div class="progress">
               <div class="progress-bar"
